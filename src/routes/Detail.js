@@ -1,31 +1,32 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom'
 
-const Detail = () => {
 
-    const [names, setNames] = useState(['홍길동','김민수'])
-    const [input, setinput] = useState('')
 
-    const handleInputChange=(e)=>{
-        setinput(e.target.value)
-    }
+const Detail = ({toDos}) => {
+  const id = useParams().id;
+  console.log(id)
 
-    const handleUpload=()=>{
-        setNames((prevState)=>{
-            return [input,...prevState]
-        })
-    }
-
-    console.log(input)
+const toDo = toDos.find(toDo=>toDo.id === parseInt(id))
+console.log(toDo)
 
   return (
-    <div>
-        <input type="text" value={input} onChange={handleInputChange}/>
-        <button onClick={handleUpload}>Upload</button>
-        {names.map((name,idx)=>{
-            return <p key={idx}>{name}</p>
-        })}
-    </div>
+    <>
+    <h1>{toDo?.text}</h1>
+    <h5>Created at : {toDo?.id}</h5>
+    </>
   )
 }
 
-export default Detail
+function mapStateToProps(state,ownProps){
+  // const {
+  //   match:{
+  //     params:{id}
+  //   }
+  // } = ownProps;
+  // return { toDo: state.find(toDo => toDo.id === parseInt(id))}
+  return { toDos : state}
+}
+
+export default connect(mapStateToProps,null)(Detail)
