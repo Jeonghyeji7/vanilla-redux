@@ -20,6 +20,7 @@ console.log(toDo)
 }
 
 function mapStateToProps(state,ownProps){
+  // match 없어짐
   // const {
   //   match:{
   //     params:{id}
